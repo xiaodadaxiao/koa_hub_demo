@@ -1,0 +1,12 @@
+# git 忽略内容
+
+node_modules
+
+
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
