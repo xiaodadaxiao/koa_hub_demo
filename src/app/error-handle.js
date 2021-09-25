@@ -13,6 +13,12 @@ const errorHandle = (err, ctx) => {
         case errorTypes.USER_ALREADY_EXISTS:
             returnError.error = '用户已存在';
             break;
+        case errorTypes.USER_NOT_EXISTS:
+            returnError.error = '用户不存在';
+            break;
+        case errorTypes.PASSWORD_ERROR:
+            returnError.error = '密码错误';
+            break;
     }
     ctx.body = returnError;
 }

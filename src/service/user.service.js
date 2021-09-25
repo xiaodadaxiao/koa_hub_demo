@@ -6,7 +6,6 @@ class UserService {
         const statement = `INSERT INTO users (name,password) VALUES (?,?);`
         //数据库操作，添加用户
         const result = await connection.execute(statement, [name, password]);
-        //返回数据
         return result
     }
     //根据用户名查询信息
