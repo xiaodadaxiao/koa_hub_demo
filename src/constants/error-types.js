@@ -1,0 +1,10 @@
+/* 定义 错误类型 的常量 */
+
+//密码或用户名不能为空
+const NAME_OR_PASSWORD_MUST_NOT_EMPTY = 'NAME_OR_PASSWORD_MUST_NOT_EMPTY'
+//用户已存在
+const USER_ALREADY_EXISTS = 'USER_ALREADY_EXISTS'
+module.exports = {
+    NAME_OR_PASSWORD_MUST_NOT_EMPTY,
+    USER_ALREADY_EXISTS,
+}
