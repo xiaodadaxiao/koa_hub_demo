@@ -7,7 +7,7 @@ const errorHandle = (err, ctx) => {
     }
     switch (err.message) {
         case errorTypes.NAME_OR_PASSWORD_MUST_NOT_EMPTY:
-            returnError.error = '账号和密码不能为空';
+            returnError.error = '账号或密码不能为空';
             returnError.state = 400
             break;
         case errorTypes.USER_ALREADY_EXISTS:
@@ -18,6 +18,14 @@ const errorHandle = (err, ctx) => {
             break;
         case errorTypes.PASSWORD_ERROR:
             returnError.error = '密码错误';
+            break;
+        case errorTypes.NOT_TOKEN:
+            returnError.error = '没有授权token'
+            returnError.state = 401
+            break;
+        case errorTypes.UNAUTHORIZATION:
+            returnError.error = 'token无效或过期'
+            returnError.state = 401
             break;
     }
     ctx.body = returnError;

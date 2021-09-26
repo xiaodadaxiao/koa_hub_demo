@@ -1,5 +1,10 @@
+const jwt = require('jsonwebtoken')
+
 const errorTypes = require('../constants/error-types')
 const userService = require('../service/user.service')
+
+//导入公钥
+const { PUBLIC_KEY } = require('../app/config')
 const { setMD5 } = require('../utils/handle-password')
 //检测登录参数中间件
 const verifyLogin = async (ctx, next) => {
@@ -24,10 +29,31 @@ const verifyLogin = async (ctx, next) => {
         const error = new Error(errorTypes.PASSWORD_ERROR)
         return ctx.app.emit('error', error, ctx)
     }
+    //传递参数
+    ctx.user = user;
     await next();
 }
 
+//检测 授权权限token 的中间件
+const verifyAuth = async (ctx, next) => {
+    //去掉请求头默认前缀 获得token
+    const token = ctx.headers.authorization.replace('Bearer ', '');
 
+    if (!token) {
+        return ctx.app.emit('error', new Error(errorTypes.NOT_TOKEN), ctx);
+    }
+    let result;
+    try {
+        result = jwt.verify(token, PUBLIC_KEY, {
+            algorithms: ['RS256']
+        })
+    } catch (err) {
+        return ctx.app.emit('error', new Error(errorTypes.UNAUTHORIZATION), ctx)
+    }
+    ctx.token = result;
+    await next()
+}
 module.exports = {
-    verifyLogin
+    verifyLogin,
+    verifyAuth
 }

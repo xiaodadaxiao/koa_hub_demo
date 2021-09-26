@@ -19,6 +19,7 @@ const verifyUser = async (ctx, next) => {
     }
     await next();
 }
+//md5加密密码
 const encryptionPassword = async (ctx, next) => {
     const password = ctx.request.body.password;
     ctx.request.body.password = setMD5(password);
