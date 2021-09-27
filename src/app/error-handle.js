@@ -27,6 +27,16 @@ const errorHandle = (err, ctx) => {
             returnError.error = 'token无效或过期'
             returnError.state = 401
             break;
+        case errorTypes.MOMENT_CONTENT_ERROR:
+            returnError.error = 'content字段不能为空且是字符串'
+            break;
+        case errorTypes.QUERY_ERROR:
+            returnError.error = '请求参数错误！'
+            break;
+        case errorTypes.NOT_PERMISSION:
+            returnError.error = '操作权限不足!'
+            break;
+
     }
     ctx.body = returnError;
 }
