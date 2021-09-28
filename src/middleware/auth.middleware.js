@@ -56,19 +56,46 @@ const verifyAuth = async (ctx, next) => {
     await next()
 }
 
-//检查权限 中间件
+//检查权限 中间件【重点】
+/* 
+ 判断用户对某张表的操作权限，
+ 那么表中的数据id字段是固定的，user_id字段是固定的（目前要操作的用户id）
+ 只需要动态改变表名即可
+ 有两个思路实现：
+ 思路一：直接 使用闭包在路由传递表名
+ 思路二：通过解析参数的key名得出表名（所以参数名要规范）
+*/
+//思路一：
+// const verifyPermission =(tableName)=>{
+//     //路由传递表名，返回此函数给路由使用
+//     return async (ctx, next) => {
+//             /* 具体操作。。。 */
+//     }
+// }
+//思路二：解析传递的参数推出表明（所以参数名和表名要规范联系）
 const verifyPermission = async (ctx, next) => {
     //获取参数
+    //参数一：要操作的用户id值
     const userId = ctx.userInfo.id;
-    const momentId = ctx.params.momentId;
-    const result = await authService.checkPermission(momentId, userId);
-    if (result.length > 0) {
-        await next()
-    } else {
-        return ctx.app.emit('error', new Error(errorTypes.NOT_PERMISSION), ctx);
+    const [resourceKey] = Object.keys(ctx.params);
+    //参数二：表名
+    const tableName = resourceKey.replace('Id', "");//去除Id，得到前面的表名
+    //参数三：要验证的数据的id值
+    const dataId = ctx.params[resourceKey];
+    //检查是否有权限
+    try {
+        const result = await authService.checkPermission(tableName, dataId, userId);
+        if (result.length <= 0) {
+            throw new Error()
+        } else {
+            await next();
+        }
+    } catch (e) {
+        ctx.app.emit('error', new Error(errorTypes.NOT_PERMISSION), ctx);
     }
-
 }
+
+
 module.exports = {
     verifyLogin,
     verifyAuth,

@@ -36,6 +36,9 @@ const errorHandle = (err, ctx) => {
         case errorTypes.NOT_PERMISSION:
             returnError.error = '操作权限不足!'
             break;
+        case errorTypes.LABEL_CANNOT_REPEAT:
+            returnError.error = '标签不能重复!'
+            break;
 
     }
     ctx.body = returnError;

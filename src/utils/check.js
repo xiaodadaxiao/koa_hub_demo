@@ -1,7 +1,7 @@
 
 /* 
  检查参数
- checkParams(参数,{
+ checkParam(参数,{
      type:'number',
      minLength:0,
      max:10,
@@ -10,7 +10,7 @@
  与参数符合返回true
 */
 
-const checkParm = (param, options) => {
+const checkParam = (param, options) => {
     if (!param) return false;
 
     //类型检查
@@ -43,4 +43,4 @@ const checkParm = (param, options) => {
     }
     return true
 }
-module.exports = { checkParm }
+module.exports = { checkParam }
