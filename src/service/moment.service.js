@@ -6,7 +6,7 @@ const connection = require('../app/database')
 const select_sql = `
             SELECT 
                 m.id id,m.content,m.createAt createTime, m.updateAt updateTime, 
-	            JSON_OBJECT('id',u.id,'name',u.name) user,
+	            JSON_OBJECT('id',u.id,'name',u.name,'avatarUrl',u.avatar_url) user,
                 (SELECT COUNT(*) FROM comment WHERE comment.moment_id = m.id) commentCount
             FROM moment m 
             LEFT JOIN  users u ON m.user_id=u.id

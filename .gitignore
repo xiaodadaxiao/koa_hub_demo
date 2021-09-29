@@ -1,6 +1,7 @@
 # git 忽略内容
 
 node_modules
+uploads
 
 .env
 

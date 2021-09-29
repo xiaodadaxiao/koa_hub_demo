@@ -5,6 +5,9 @@ const errorHandle = (err, ctx) => {
         error: '发生未知错误',
         state: 400
     }
+    if (err.message) {
+        returnError.error = err.message;
+    }
     switch (err.message) {
         case errorTypes.NAME_OR_PASSWORD_MUST_NOT_EMPTY:
             returnError.error = '账号或密码不能为空';

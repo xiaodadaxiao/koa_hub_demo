@@ -11,6 +11,7 @@ const PRIVATE_KEY = fs.readFileSync(path.join(__dirname, 'keys', 'private.key'),
 module.exports = {
     //启动端口
     APP_PORT: process.env.APP_PORT,
+    APP_HOST: process.env.APP_HOST,
     //数据库
     MYSQL_HOST: process.env.MYSQL_HOST,
     MYSQL_PORT: process.env.MYSQL_PORT,
@@ -19,5 +20,5 @@ module.exports = {
     MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
     //公钥私钥
     PUBLIC_KEY,
-    PRIVATE_KEY
+    PRIVATE_KEY,
 }
